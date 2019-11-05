@@ -80,8 +80,8 @@ function toWeather(/*darkSky*/) {
     const dayArray = [];
     days.data.forEach((day) => {
         dayArray.push({
-            forecast: day.summary,
-            time: (day.time.toUTCString()),
+            forecast: days.summary,
+            time: (day.time.toDateString()),
         });
     });
     
