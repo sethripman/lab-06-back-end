@@ -22,6 +22,18 @@ app.get('/location', (request, response) => {
     }
 });
 
+app.get('/weather', (request, response) => {
+    try {
+        const weather = request.query.weather;
+        const result = getForecastTime(weather);
+        response.status(200).json(result);
+    }
+    catch (err) {
+        // TODO: make an object and send via .json...
+        response.status(500).send('Sorry something went wrong, please try again');
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
@@ -47,4 +59,31 @@ function toLocation(/*geoData*/) {
         latitude: geometry.location.lat,
         longitude: geometry.location.lng
     };
+}
+
+function getForecastTime(weather) {
+    if (weather === 'bad time') {
+        throw new Error();
+    }
+
+    // ignore location for now, return hard-coded file
+    // api call will go here
+
+    // convert to desired data format:
+    return toWeather(darkSky);
+}
+
+function toWeather(/*darkSky*/) {
+    const firstResult = darkSky.results[0];
+    const days = firstResult.daily;
+
+    const dayArray = [];
+    days.data.forEach((day) => {
+        dayArray.push({
+            forecast: day.summary,
+            time: (day.time.toUTCString()),
+        });
+    });
+    
+    return dayArray;
 }
