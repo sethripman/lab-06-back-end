@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const geoData = require('./data/geo.json');
+const darkSky = require('./data/darksky.json');
 
 const PORT = process.env.PORT || 3000;
 
@@ -26,8 +27,7 @@ app.listen(PORT, () => {
 });
 
 function getLatLng(location) {
-    // simulate an error if special "bad location" is provided:
-    if(location == 'bad location') {
+    if (location === 'bad location') {
         throw new Error();
     }
 
