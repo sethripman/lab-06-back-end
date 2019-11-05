@@ -5,10 +5,15 @@ const app = express();
 const geoData = require('./data/geo.json');
 const darkSky = require('./data/darksky.json');
 
-const PORT = process.env.PORT || 3000;
-
 app.use(cors());
 app.use(express.static('./public'));
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
+});
+
 
 app.get('/location', (request, response) => {
     try {
@@ -34,9 +39,6 @@ app.get('/weather', (request, response) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-});
 
 function getLatLng(location) {
     if (location === 'bad location') {
@@ -78,13 +80,14 @@ function toWeather(/*darkSky*/) {
     const days = firstResult.daily;
 
     const dayArray = [];
-    days.data.forEach((day) => {
+    days.data.forEach(day => {
         const timeString = (day.time.toDateString());
         dayArray.push({
             forecast: day.summary,
-            time: timeString,
+            time: timeString
         });
+        
+        return dayArray;
     });
     
-    return dayArray;
 }
