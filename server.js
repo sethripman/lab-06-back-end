@@ -74,7 +74,7 @@ function getForecastTime(weather) {
 }
 
 function toWeather(/*darkSky*/) {
-    const firstResult = darkSky.results[0];
+    const firstResult = darkSky[0];
     const days = firstResult.daily;
 
     const dayArray = [];
