@@ -44,17 +44,23 @@ const getWeatherResponse = async(lat, long) => {
 };
 
 app.get('/location', async (req, res) => {
-    const searchQuery = req.query.search;
-    const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
+    try{
+        const searchQuery = req.query.search;
+        const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
+        console.log(searchQuery);
 
-    const locationItem = await superagent.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchQuery}&key=${GEOCODE_API_KEY}`);
+        const locationItem = await superagent.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchQuery}&key=${GEOCODE_API_KEY}`);
+        console.log(locationItem.text);
 
-    const actualItem = JSON.parse(locationItem.text).results[0];
-    const response = formatLocationResponse(actualItem);
+        const actualItem = JSON.parse(locationItem.text).results[0];
+        const response = formatLocationResponse(actualItem);
 
-    latlngs = response;
+        latlngs = response;
     
-    res.json(response);
+        res.json(response);
+    } catch(e) {
+        throw new Error(e);
+    }
 });
 
 app.get('/weather', async (req, res) => {
