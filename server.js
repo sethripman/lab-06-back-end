@@ -58,10 +58,10 @@ const getTrailResponse = async(lat, lng) => {
             stars: item.stars,
             starVotes: item.starVotes,
             summary: item.summary,
-            trail_url: item.trail_url,
-            conditions: item.conditions,
-            condition_date: item.condition_date,
-            condition_time: item.condition_time,
+            url: item.url,
+            conditionStatus: item.conditionStatus,
+            conditionDate: item.conditionDate,
+            conditionDetails: item.conditionDetails,
         };
     });
 
