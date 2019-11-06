@@ -56,7 +56,7 @@ const getTrailResponse = async(lat, lng) => {
             location: item.location,
             length: item.length,
             stars: item.stars,
-            star_votes: item.star_votes,
+            starVotes: item.starVotes,
             summary: item.summary,
             trail_url: item.trail_url,
             conditions: item.conditions,
@@ -68,7 +68,7 @@ const getTrailResponse = async(lat, lng) => {
     return dailyArray;
 };
 
-app.get('/location', async (req, res) => {
+app.get('/location', async(req, res) => {
     try {
         const searchQuery = req.query.search;
         const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
