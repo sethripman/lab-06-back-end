@@ -43,7 +43,7 @@ const getWeatherResponse = async(lat, long) => {
     return dailyArray;
 };
 
-const getTrailResponse = async(lat, long) => {
+const getTrailResponse = async(lat, lng) => {
     const HIKING_API_KEY = process.env.HIKING_API_KEY;
 
     const trailItem = await superagent.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxDistance=200&key=${HIKING_API_KEY}`);
