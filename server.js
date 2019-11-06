@@ -1,8 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const app = express();
 const superagent = require('superagent');
+const app = express();
 // const geoData = require('./data/geo.json');
 // const darkSky = require('./data/darksky.json');
 
@@ -30,28 +30,23 @@ const formatLocationResponse = locationItem => {
 };
 
 const getWeatherResponse = async(lat, long) => {
+    const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
 
-    const weatherData = await superagent.get(`https://api.darksky.net/forecast/${process.env.DARKSKY_API_KEY}/${lat},${long}`);
+    const weatherItem = await superagent.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${long}`);
 
-    const actualWeatherData = JSON.parse(weatherData.text);
-    const dailyArray = actualWeatherData.daily.data;
-    console.log(weatherItem);
-    return {
-        forecast: weatherItem.summary,
-        time: new Date(weatherItem.time * 1000).toDateString(),
-    };
+    const actualWeatherData = JSON.parse(weatherItem.text);
+    const dailyArray = actualWeatherData.daily.data.map((item) => {
+        return {
+            forecast: item.summary,
+            time: new Date(item.time * 1000).toDateString(),
+        };
+    });
 
-});
-return mundgedArray;
-
+    return dailyArray;
 };
-
-const geoJSON = require('./data/geo.json');
 
 app.get('/location', async (req, res) => {
     const searchQuery = req.query.search;
-    console.log('TODO: USING THIS SEARCH WITH API', searchQuery);
-
     const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
 
     const locationItem = await superagent.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchQuery}&key=${GEOCODE_API_KEY}`);
@@ -59,15 +54,13 @@ app.get('/location', async (req, res) => {
     const actualItem = JSON.parse(locationItem.text).results[0];
     const response = formatLocationResponse(actualItem);
 
-    latlgs = response;
+    latlngs = response;
     
-    res.joson(response);
+    res.json(response);
 });
 
 app.get('/weather', async (req, res) => {
     const weatherObject = await getWeatherResponse(latlngs.latitude, latlngs.longitude);
-
-    console.log('TODO: USING THIS SEARCH WITH API', weatherObject);
 
     res.json(weatherObject);
 });
