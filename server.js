@@ -56,12 +56,12 @@ const getTrailResponse = async(lat, lng) => {
             location: item.location,
             length: item.length,
             stars: item.stars,
-            starVotes: item.starVotes,
+            star_votes: item.starVotes,
             summary: item.summary,
-            url: item.url,
-            conditionStatus: item.conditionStatus,
-            conditionDate: item.conditionDate,
-            conditionDetails: item.conditionDetails,
+            trail_url: item.url,
+            conditions: item.conditionStatus,
+            condition_date: item.conditionDate.slice(0, 9),
+            condition_time: item.conditionTime.slice(11, 18)
         };
     });
 
@@ -86,7 +86,7 @@ app.get('/location', async(req, res) => {
     }
 });
 
-app.get('/weather', async (req, res) => {
+app.get('/weather', async(req, res) => {
     try {
         const weatherObject = await getWeatherResponse(latlngs.latitude, latlngs.longitude);
 
@@ -96,7 +96,7 @@ app.get('/weather', async (req, res) => {
     }
 });
 
-app.get('/trails', async (req, res) => {
+app.get('/trails', async(req, res) => {
     try {
         const trailObject = await getTrailResponse(latlngs.latitude, latlngs.longitude);
 
