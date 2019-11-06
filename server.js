@@ -52,8 +52,18 @@ const getTrailResponse = async(lat, long) => {
     const actualTrailData = JSON.parse(trailItem.text);
     const dailyArray = actualTrailData.daily.data.map((item) => {
         return {
-            forecast: item.summary,
-            time: new Date(item.time * 1000).toDateString(),
+            name: item.name,
+            location: item.location,
+            length: item.length,
+            stars: item.stars,
+            star_votes: item.star_votes,
+            summary: item.summary,
+            trail_url: item.trail_url,
+            conditions: item.conditions,
+            condition_date: item.condition_date,
+            condition_time: item.condition_time,
+            
+            // time: new Date(item.time * 1000).toDateString(),
         };
     });
 
