@@ -44,12 +44,13 @@ const getWeatherResponse = async(lat, long) => {
 };
 
 const getTrailResponse = async(lat, long) => {
-    const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
+    const HIKING_API_KEY = process.env.HIKING_API_KEY;
 
-    const weatherItem = await superagent.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${long}`);
+    const trailItem = await superagent.get(`https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lng}&maxDistance=200&key=${HIKING_API_KEY}`);
 
-    const actualWeatherData = JSON.parse(weatherItem.text);
-    const dailyArray = actualWeatherData.daily.data.map((item) => {
+    
+    const actualTrailData = JSON.parse(trailItem.text);
+    const dailyArray = actualTrailData.daily.data.map((item) => {
         return {
             forecast: item.summary,
             time: new Date(item.time * 1000).toDateString(),
