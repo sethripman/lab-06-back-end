@@ -43,7 +43,7 @@ const getWeatherResponse = async(lat, long) => {
     return dailyArray;
 };
 
-app.get('/location', async (req, res) => {
+app.get('/location', async(req, res) => {
     try {
         const searchQuery = req.query.search;
         const GEOCODE_API_KEY = process.env.GEOCODE_API_KEY;
@@ -61,7 +61,7 @@ app.get('/location', async (req, res) => {
     }
 });
 
-app.get('/weather', async (req, res) => {
+app.get('/weather', async(req, res) => {
     try {
         const weatherObject = await getWeatherResponse(latlngs.latitude, latlngs.longitude);
 
@@ -70,6 +70,16 @@ app.get('/weather', async (req, res) => {
         throw new Error(e);
     }
 });
+
+app.get('/events', async(lat, long) => {
+    const EVENTBRITE_API_KEY = process.env.EVENTBRITE_API_KEY;
+
+    const eventItem = await superagent.get(`https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=${EVENTBRITE_API_KEY}&redirect_uri=${lat},${long}`);
+
+    // TODO the rest of the get
+    
+   
+})
 
 
 const PORT = process.env.PORT || 3000;
