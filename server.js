@@ -3,11 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const superagent = require('superagent');
 const app = express();
-// const geoData = require('./data/geo.json');
-// const darkSky = require('./data/darksky.json');
 
 app.use(cors());
-// app.use(express.static('./public'));
+app.use(express.static('./public'));
 
 let latlngs;
 
