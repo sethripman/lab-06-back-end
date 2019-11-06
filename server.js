@@ -60,8 +60,8 @@ const getTrailResponse = async(lat, lng) => {
             summary: item.summary,
             trail_url: item.url,
             conditions: item.conditionStatus,
-            condition_date: item.conditionDate.slice(0, 9),
-            condition_time: item.conditionTime.slice(11, 18)
+            condition_date: item.conditionDate.slice(0, 10),
+            condition_time: item.conditionTime.slice(11)
         };
     });
 
