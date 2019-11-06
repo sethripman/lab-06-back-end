@@ -43,6 +43,22 @@ const getWeatherResponse = async(lat, long) => {
     return dailyArray;
 };
 
+const getTrailResponse = async(lat, long) => {
+    const DARKSKY_API_KEY = process.env.DARKSKY_API_KEY;
+
+    const weatherItem = await superagent.get(`https://api.darksky.net/forecast/${DARKSKY_API_KEY}/${lat},${long}`);
+
+    const actualWeatherData = JSON.parse(weatherItem.text);
+    const dailyArray = actualWeatherData.daily.data.map((item) => {
+        return {
+            forecast: item.summary,
+            time: new Date(item.time * 1000).toDateString(),
+        };
+    });
+
+    return dailyArray;
+};
+
 app.get('/location', async (req, res) => {
     try {
         const searchQuery = req.query.search;
@@ -66,6 +82,16 @@ app.get('/weather', async (req, res) => {
         const weatherObject = await getWeatherResponse(latlngs.latitude, latlngs.longitude);
 
         res.json(weatherObject);
+    } catch (e) {
+        throw new Error(e);
+    }
+});
+
+app.get('/trails', async (req, res) => {
+    try {
+        const trailObject = await getTrailResponse(latlngs.latitude, latlngs.longitude);
+
+        res.json(trailObject);
     } catch (e) {
         throw new Error(e);
     }
