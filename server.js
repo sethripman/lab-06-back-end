@@ -71,10 +71,10 @@ app.get('/weather', async(req, res) => {
     }
 });
 
-app.get('/events', async(lat, long) => {
+app.get('/events', async(latitude, longitude) => {
     const EVENTBRITE_API_KEY = process.env.EVENTBRITE_API_KEY;
 
-    const eventItem = await superagent.get(`https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=${EVENTBRITE_API_KEY}&redirect_uri=${lat},${long}`);
+    const eventItem = await superagent.get(`https://www.eventbrite.com/oauth/authorize?response_type=token&client_id=${EVENTBRITE_API_KEY}&redirect_uri=${latitude},${longitude}`);
 
     // TODO the rest of the get
     
