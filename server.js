@@ -69,10 +69,8 @@ const getTrailResponse = async(lat, lng) => {
 };
 
 const getYelpResponse = async(lat, lng) => {
-    const HIKING_API_KEY = process.env.HIKING_API_KEY;
-
-    const yelpData = await superagent.get(`https://api.yelp.com/v3/businesses/search?latitude=${latLngs.latitude}&longitude=${latLngs.longitude}`)
-      .set('Authorization', Bearer ${process.env.YELP_API_KEY});
+    const yelpData = await superagent.get(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}`)
+        .set(`Authorization, Bearer ${process.env.YELP_API_KEY}`);
 
     
     const actualYelpData = JSON.parse(yelpData.text);
@@ -144,76 +142,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
 });
-
-
-// app.get('/location', (request, response) => {
-//     try {
-//         const location = request.query.location;
-//         const result = getLatLng(location);
-//         response.status(200).json(result);
-//     }
-//     catch (err) {
-        
-//         response.status(500).send('Sorry something went wrong, please try again');
-//     }
-// });
-
-// app.get('/weather', (request, response) => {
-//     try {
-//         const weather = request.query.weather;
-//         const result = getForecastTime(weather);
-//         response.status(200).json(result);
-//     }
-//     catch (err) {
-        
-//         response.status(500).send('Sorry something went wrong, please try again');
-//     }
-// });
-
-
-// function getLatLng(location) {
-//     if (location === 'bad location') {
-//         throw new Error();
-//     }
-
-    
-//     return toLocation(geoData);
-// }
-
-// function toLocation(/*geoData*/) {
-//     const firstResult = geoData.results[0];
-//     const geometry = firstResult.geometry;
-    
-//     return {
-//         formatted_query: firstResult.formatted_address,
-//         latitude: geometry.location.lat,
-//         longitude: geometry.location.lng
-//     };
-// }
-
-// function getForecastTime(weather) {
-//     if (weather === 'bad time') {
-//         throw new Error();
-//     }
-
-    
-//     return toWeather(darkSky);
-// }
-
-// function toWeather(/*darkSky*/) {
-//     const days = darkSky.daily;
-
-//     const dayArray = [];
-//     days.data.forEach((day) => {
-//         const thisDate = new Date(day.time * 1000);
-//         const timeString = thisDate.toDateString();
-//         const thisObject = { 
-//             forecast: day.summary,
-//             time: timeString
-//         };
-//         dayArray.push(thisObject);
-//     });
-    
-//     return dayArray;
-    
-// }
