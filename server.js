@@ -70,7 +70,7 @@ const getTrailResponse = async(lat, lng) => {
 
 const getYelpResponse = async(lat, lng) => {
     const yelpData = await superagent.get(`https://api.yelp.com/v3/businesses/search?latitude=${lat}&longitude=${lng}`)
-        .set(`Authorization, Bearer ${process.env.YELP_API_KEY}`);
+        .set(`Authorization`, `Bearer ${process.env.YELP_API_KEY}`);
 
     
     const actualYelpData = JSON.parse(yelpData.text);
